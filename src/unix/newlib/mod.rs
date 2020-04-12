@@ -4058,9 +4058,6 @@ extern "C" {
     pub fn sleep(__seconds: c_uint) -> c_uint;
 }
 extern "C" {
-    pub fn sysconf(__name: c_int) -> c_long;
-}
-extern "C" {
     pub fn tcgetpgrp(__fildes: c_int) -> pid_t;
 }
 extern "C" {
