@@ -1207,13 +1207,18 @@ extern "C" {
         filename: *const ::c_char,
         times: *const ::timeval,
     ) -> ::c_int;
+    #[cfg(not(target_env = "newlib"))]
     pub fn dlopen(filename: *const ::c_char, flag: ::c_int) -> *mut ::c_void;
+    #[cfg(not(target_env = "newlib"))]
     pub fn dlerror() -> *mut ::c_char;
+    #[cfg(not(target_env = "newlib"))]
     pub fn dlsym(
         handle: *mut ::c_void,
         symbol: *const ::c_char,
     ) -> *mut ::c_void;
+    #[cfg(not(target_env = "newlib"))]
     pub fn dlclose(handle: *mut ::c_void) -> ::c_int;
+    #[cfg(not(target_env = "newlib"))]
     pub fn dladdr(addr: *const ::c_void, info: *mut Dl_info) -> ::c_int;
 
     pub fn getaddrinfo(
@@ -1406,11 +1411,17 @@ extern "C" {
         link_name = "tcdrain$UNIX2003"
     )]
     pub fn tcdrain(fd: ::c_int) -> ::c_int;
+    #[cfg(not(target_env = "newlib"))]
     pub fn cfgetispeed(termios: *const ::termios) -> ::speed_t;
+    #[cfg(not(target_env = "newlib"))]
     pub fn cfgetospeed(termios: *const ::termios) -> ::speed_t;
+    #[cfg(not(target_env = "newlib"))]
     pub fn cfsetispeed(termios: *mut ::termios, speed: ::speed_t) -> ::c_int;
+    #[cfg(not(target_env = "newlib"))]
     pub fn cfsetospeed(termios: *mut ::termios, speed: ::speed_t) -> ::c_int;
+    #[cfg(not(target_env = "newlib"))]
     pub fn tcgetattr(fd: ::c_int, termios: *mut ::termios) -> ::c_int;
+    #[cfg(not(target_env = "newlib"))]
     pub fn tcsetattr(
         fd: ::c_int,
         optional_actions: ::c_int,
@@ -1498,7 +1509,7 @@ cfg_if! {
 }
 
 cfg_if! {
-   if #[cfg(not(any(target_os = "solaris", target_os = "illumos")))] {
+   if #[cfg(not(any(target_os = "solaris", target_os = "illumos", target_env = "newlib")))] {
         extern {
             pub fn cfmakeraw(termios: *mut ::termios);
             pub fn cfsetspeed(termios: *mut ::termios,
